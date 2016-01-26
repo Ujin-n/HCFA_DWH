@@ -1,0 +1,1108 @@
+/**************************************************************************
+ DDL statements for DIM_DATE table
+**************************************************************************/
+DECLARE
+    E_OBJECT_EXISTS       EXCEPTION;
+    PRAGMA EXCEPTION_INIT (E_OBJECT_EXISTS, -00955);
+BEGIN
+    EXECUTE IMMEDIATE '
+CREATE TABLE DIM_DATE 
+(
+    DATE_ID	                    NUMERIC(12)         NOT NULL,
+    DATE_NAME                   DATE,
+    DATE_FULL_DESC	            VARCHAR2(20),
+    DAY_OF_WEEK_NAME	        VARCHAR2(11),
+    DAY_NUMBER_IN_MONTH	        NUMERIC(2),
+    LAST_DATE_MONTH_FLAG_DESC	VARCHAR2(25),
+    WEEK_NUM_IN_YEAR	        NUMERIC(2),
+    MONTH_NAME	                VARCHAR2(11),
+    MONTH_NUM_IN_YEAR	        NUMERIC(2),
+    YEAR	                    NUMERIC(4),
+    YEAR_MONTH_DESC	            VARCHAR2(11),
+    HOLIDAY_FLAG	            VARCHAR2(11),
+    WEEKDAY_FLAG	            VARCHAR2(11)
+ )
+   TABLESPACE PHOENIXDATA';
+  
+
+    DBMS_OUTPUT.PUT_LINE(    '[INFO]: Table DIM_DATE was created');
+EXCEPTION
+    WHEN E_OBJECT_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[INFO]: Table DIM_DATE already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of DIM_DATE table:' || SQLERRM);
+END;
+/
+
+-- Primary key
+DECLARE
+    E_OBJECT_EXISTS        EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_OBJECT_EXISTS, -00955);
+BEGIN
+    EXECUTE IMMEDIATE '
+        CREATE UNIQUE INDEX XPK_DIM_DATE
+            ON DIM_DATE (DATE_ID)
+                TABLESPACE PHOENIXINDEX';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XPK_DIM_DATE was created');
+EXCEPTION
+    WHEN E_OBJECT_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XPK_DIM_DATE already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of XPK_DIM_DATE index:' || SQLERRM);
+        
+END;
+/
+
+DECLARE
+    E_PRIMARY_KEY_EXISTS   EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_PRIMARY_KEY_EXISTS, -02260);
+BEGIN
+    EXECUTE IMMEDIATE '
+        ALTER TABLE DIM_DATE
+            ADD CONSTRAINT PK_DIM_DATE
+                PRIMARY KEY (DATE_ID)
+                    USING INDEX
+                    TABLESPACE PHOENIXINDEX';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint PK_DIM_DATE was created');
+
+EXCEPTION
+    WHEN E_PRIMARY_KEY_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint PK_DIM_DATE already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of PK_DIM_DATE constraint:' || SQLERRM);
+END;
+/
+
+
+
+/**************************************************************************
+ DDL statements for DIM_PATIENT table
+**************************************************************************/
+DECLARE
+    E_OBJECT_EXISTS       EXCEPTION;
+    PRAGMA EXCEPTION_INIT (E_OBJECT_EXISTS, -00955);
+BEGIN
+    EXECUTE IMMEDIATE '
+CREATE TABLE DIM_PATIENT 
+(
+    PATIENT_ID	                NUMERIC(12)     NOT NULL,
+    PATIENT_SSN	                VARCHAR2(11),
+    PATIENT_CLAIM_NUMBER	    VARCHAR2(30),
+    PATIENT_GENDER	            VARCHAR2(11),
+    PATIENT_LAST_NAME	        VARCHAR2(256),
+    PATIENT_FIRST_NAME	        VARCHAR2(256),
+    PATIENT_MIDDLE_NAME	        VARCHAR2(256),
+    PATIENT_FULL_NAME	        VARCHAR2(515),
+    PATIENT_BIRTHDATE	        DATE,
+    PATIENT_ADDRESS_1	        VARCHAR2(256),
+    PATIENT_ADDRESS_2	        VARCHAR2(256),
+    PATIENT_CITY	            VARCHAR2(256),
+    PATIENT_STATE	            VARCHAR2(11),
+    PATIENT_ZIP_CODE	        VARCHAR2(11),
+    PATIENT_MOBILE_PHONE_NUM	VARCHAR2(16)
+)
+   TABLESPACE PHOENIXDATA';
+
+
+    DBMS_OUTPUT.PUT_LINE(    '[INFO]: Table DIM_PATIENT was created');
+EXCEPTION
+    WHEN E_OBJECT_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[INFO]: Table DIM_PATIENT already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of DIM_PATIENT table:' || SQLERRM);
+END;
+/
+
+-- Primary key
+DECLARE
+    E_OBJECT_EXISTS        EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_OBJECT_EXISTS, -00955);
+BEGIN
+    EXECUTE IMMEDIATE '
+        CREATE UNIQUE INDEX XPK_DIM_PATIENT
+            ON DIM_PATIENT (PATIENT_ID)
+                TABLESPACE PHOENIXINDEX';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XPK_DIM_PATIENT was created');
+EXCEPTION
+    WHEN E_OBJECT_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XPK_DIM_PATIENT already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of XPK_DIM_PATIENT index:' || SQLERRM);
+        
+END;
+/
+
+DECLARE
+    E_PRIMARY_KEY_EXISTS   EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_PRIMARY_KEY_EXISTS, -02260);
+BEGIN
+    EXECUTE IMMEDIATE '
+        ALTER TABLE DIM_PATIENT
+            ADD CONSTRAINT PK_DIM_PATIENT
+                PRIMARY KEY (PATIENT_ID)
+                    USING INDEX
+                    TABLESPACE PHOENIXINDEX';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint PK_DIM_PATIENT was created');
+
+EXCEPTION
+    WHEN E_PRIMARY_KEY_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint PK_DIM_PATIENT already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of PK_DIM_PATIENT constraint:' || SQLERRM);
+END;
+/
+
+
+
+
+/**************************************************************************
+ DDL statements for DIM_PROVIDER table
+**************************************************************************/
+DECLARE
+    E_OBJECT_EXISTS       EXCEPTION;
+    PRAGMA EXCEPTION_INIT (E_OBJECT_EXISTS, -00955);
+BEGIN
+    EXECUTE IMMEDIATE '
+CREATE TABLE DIM_PROVIDER 
+(
+
+    PROVIDER_ID	                NUMERIC(12) NOT NULL,
+    PROVIDER_TYPE	            VARCHAR2(11),
+    PROVIDER_FEDERAL_TAX_ID	    VARCHAR2(12),
+    PROVIDER_NAME	            VARCHAR2(256),
+    PROVIDER_ADDRESS_1	        VARCHAR2(256),
+    PROVIDER_ADDRESS_2	        VARCHAR2(256),
+    PROVIDER_CITY	            VARCHAR2(256),
+    PROVIDER_STATE	            VARCHAR2(11),
+    PROVIDER_ZIP_CODE	        VARCHAR2(11),
+    PROVIDER_OFFICE_PHONE_NUM	VARCHAR2(16)
+)
+   TABLESPACE PHOENIXDATA';
+
+    DBMS_OUTPUT.PUT_LINE(    '[INFO]: Table DIM_PROVIDER was created');
+EXCEPTION
+    WHEN E_OBJECT_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[INFO]: Table DIM_PROVIDER already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of DIM_PROVIDER table:' || SQLERRM);
+END;
+/
+
+-- Primary key
+DECLARE
+    E_OBJECT_EXISTS        EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_OBJECT_EXISTS, -00955);
+BEGIN
+    EXECUTE IMMEDIATE '
+        CREATE UNIQUE INDEX XPK_DIM_PROVIDER
+            ON DIM_PROVIDER (PROVIDER_ID)
+                TABLESPACE PHOENIXINDEX';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XPK_DIM_PROVIDER was created');
+EXCEPTION
+    WHEN E_OBJECT_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XPK_DIM_PROVIDER already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of XPK_DIM_PROVIDER index:' || SQLERRM);
+        
+END;
+/
+
+DECLARE
+    E_PRIMARY_KEY_EXISTS   EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_PRIMARY_KEY_EXISTS, -02260);
+BEGIN
+    EXECUTE IMMEDIATE '
+        ALTER TABLE DIM_PROVIDER
+            ADD CONSTRAINT PK_DIM_PROVIDER
+                PRIMARY KEY (PROVIDER_ID)
+                    USING INDEX
+                    TABLESPACE PHOENIXINDEX';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint PK_DIM_PROVIDER was created');
+
+EXCEPTION
+    WHEN E_PRIMARY_KEY_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint PK_DIM_PROVIDER already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of PK_DIM_PROVIDER constraint:' || SQLERRM);
+END;
+/
+
+
+
+
+/**************************************************************************
+ DDL statements for DIM_CPT table
+**************************************************************************/
+DECLARE
+    E_OBJECT_EXISTS       EXCEPTION;
+    PRAGMA EXCEPTION_INIT (E_OBJECT_EXISTS, -00955);
+BEGIN
+    EXECUTE IMMEDIATE '
+CREATE TABLE DIM_CPT 
+(
+   CPT_ID                 NUMBER(12)           NOT NULL,
+   CPT_CODE               VARCHAR2(15),
+   CPT_DESC               VARCHAR2(256)
+)
+   TABLESPACE PHOENIXDATA';
+
+    DBMS_OUTPUT.PUT_LINE(    '[INFO]: Table DIM_CPT was created');
+EXCEPTION
+    WHEN E_OBJECT_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[INFO]: Table DIM_CPT already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of DIM_CPT table:' || SQLERRM);
+END;
+/
+
+-- Primary key
+DECLARE
+    E_OBJECT_EXISTS        EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_OBJECT_EXISTS, -00955);
+BEGIN
+    EXECUTE IMMEDIATE '
+        CREATE UNIQUE INDEX XPK_DIM_CPT
+            ON DIM_CPT (CPT_ID)
+                TABLESPACE PHOENIXINDEX';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XPK_DIM_CPT was created');
+EXCEPTION
+    WHEN E_OBJECT_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XPK_DIM_CPT already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of XPK_DIM_CPT index:' || SQLERRM);
+        
+END;
+/
+
+DECLARE
+    E_PRIMARY_KEY_EXISTS   EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_PRIMARY_KEY_EXISTS, -02260);
+BEGIN
+    EXECUTE IMMEDIATE '
+        ALTER TABLE DIM_CPT
+            ADD CONSTRAINT PK_DIM_CPT
+                PRIMARY KEY (CPT_ID)
+                    USING INDEX
+                    TABLESPACE PHOENIXINDEX';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint PK_DIM_CPT was created');
+
+EXCEPTION
+    WHEN E_PRIMARY_KEY_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint PK_DIM_CPT already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of PK_DIM_CPT constraint:' || SQLERRM);
+END;
+/
+
+
+
+
+/**************************************************************************
+ DDL statements for DIM_BILL table
+**************************************************************************/
+DECLARE
+    E_OBJECT_EXISTS       EXCEPTION;
+    PRAGMA EXCEPTION_INIT (E_OBJECT_EXISTS, -00955);
+BEGIN
+    EXECUTE IMMEDIATE '
+CREATE TABLE DIM_BILL 
+(
+   BILL_ID                NUMBER(12)           NOT NULL,
+   BILL_CODE              VARCHAR2(32)
+)
+   TABLESPACE PHOENIXDATA';
+
+    DBMS_OUTPUT.PUT_LINE(    '[INFO]: Table DIM_BILL was created');
+EXCEPTION
+    WHEN E_OBJECT_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[INFO]: Table DIM_BILL already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of DIM_BILL table:' || SQLERRM);
+END;
+/
+
+-- Primary key
+DECLARE
+    E_OBJECT_EXISTS        EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_OBJECT_EXISTS, -00955);
+BEGIN
+    EXECUTE IMMEDIATE '
+        CREATE UNIQUE INDEX XPK_DIM_BILL
+            ON DIM_BILL (BILL_ID)
+                TABLESPACE PHOENIXINDEX';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XPK_DIM_BILL was created');
+EXCEPTION
+    WHEN E_OBJECT_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XPK_DIM_BILL already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of XPK_DIM_BILL index:' || SQLERRM);
+        
+END;
+/
+
+DECLARE
+    E_PRIMARY_KEY_EXISTS   EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_PRIMARY_KEY_EXISTS, -02260);
+BEGIN
+    EXECUTE IMMEDIATE '
+        ALTER TABLE DIM_BILL
+            ADD CONSTRAINT PK_DIM_BILL
+                PRIMARY KEY (BILL_ID)
+                    USING INDEX
+                    TABLESPACE PHOENIXINDEX';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint PK_DIM_BILL was created');
+
+EXCEPTION
+    WHEN E_PRIMARY_KEY_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint PK_DIM_BILL already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of PK_DIM_BILL constraint:' || SQLERRM);
+END;
+/
+
+
+
+
+
+/**************************************************************************
+ DDL statements for DIM_MODIFIER table
+**************************************************************************/
+DECLARE
+    E_OBJECT_EXISTS       EXCEPTION;
+    PRAGMA EXCEPTION_INIT (E_OBJECT_EXISTS, -00955);
+BEGIN
+    EXECUTE IMMEDIATE '
+CREATE TABLE DIM_MODIFIER
+(
+   MODIFIER_ID                NUMBER(12)           NOT NULL,
+   MODIFIER_CODE              VARCHAR2(15),
+   MODIFIER_DESC              VARCHAR2(256)
+)
+   TABLESPACE PHOENIXDATA';
+
+    DBMS_OUTPUT.PUT_LINE(    '[INFO]: Table DIM_MODIFIER was created');
+EXCEPTION
+    WHEN E_OBJECT_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[INFO]: Table DIM_MODIFIER already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of DIM_MODIFIER table:' || SQLERRM);
+END;
+/
+
+-- Primary key
+DECLARE
+    E_OBJECT_EXISTS        EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_OBJECT_EXISTS, -00955);
+BEGIN
+    EXECUTE IMMEDIATE '
+        CREATE UNIQUE INDEX XPK_DIM_MODIFIER
+            ON DIM_MODIFIER (MODIFIER_ID)
+                TABLESPACE PHOENIXINDEX';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XPK_DIM_MODIFIER was created');
+EXCEPTION
+    WHEN E_OBJECT_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XPK_DIM_MODIFIER already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of XPK_DIM_MODIFIER index:' || SQLERRM);
+        
+END;
+/
+
+DECLARE
+    E_PRIMARY_KEY_EXISTS   EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_PRIMARY_KEY_EXISTS, -02260);
+BEGIN
+    EXECUTE IMMEDIATE '
+        ALTER TABLE DIM_MODIFIER
+            ADD CONSTRAINT PK_DIM_MODIFIER
+                PRIMARY KEY (MODIFIER_ID)
+                    USING INDEX
+                    TABLESPACE PHOENIXINDEX';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint PK_DIM_MODIFIER was created');
+
+EXCEPTION
+    WHEN E_PRIMARY_KEY_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint PK_DIM_MODIFIER already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of PK_DIM_MODIFIER constraint:' || SQLERRM);
+END;
+/
+
+
+
+/**************************************************************************
+ DDL statements for DIM_DIAGNOSE table
+**************************************************************************/
+DECLARE
+    E_OBJECT_EXISTS       EXCEPTION;
+    PRAGMA EXCEPTION_INIT (E_OBJECT_EXISTS, -00955);
+BEGIN
+    EXECUTE IMMEDIATE '
+CREATE TABLE DIM_DIAGNOSE
+(
+   DIAGNOSE_ID                NUMBER(12)           NOT NULL,
+   DIAGNOSE_CODE              VARCHAR2(15)
+)
+   TABLESPACE PHOENIXDATA';
+
+    DBMS_OUTPUT.PUT_LINE(    '[INFO]: Table DIM_DIAGNOSE was created');
+EXCEPTION
+    WHEN E_OBJECT_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[INFO]: Table DIM_DIAGNOSE already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of DIM_DIAGNOSE table:' || SQLERRM);
+END;
+/
+
+-- Primary key
+DECLARE
+    E_OBJECT_EXISTS        EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_OBJECT_EXISTS, -00955);
+BEGIN
+    EXECUTE IMMEDIATE '
+        CREATE UNIQUE INDEX XPK_DIM_DIAGNOSE
+            ON DIM_DIAGNOSE (DIAGNOSE_ID)
+                TABLESPACE PHOENIXINDEX';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XPK_DIM_DIAGNOSE was created');
+EXCEPTION
+    WHEN E_OBJECT_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XPK_DIM_DIAGNOSE already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of XPK_DIM_DIAGNOSE index:' || SQLERRM);
+        
+END;
+/
+
+DECLARE
+    E_PRIMARY_KEY_EXISTS   EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_PRIMARY_KEY_EXISTS, -02260);
+BEGIN
+    EXECUTE IMMEDIATE '
+        ALTER TABLE DIM_DIAGNOSE
+            ADD CONSTRAINT PK_DIM_DIAGNOSE
+                PRIMARY KEY (DIAGNOSE_ID)
+                    USING INDEX
+                    TABLESPACE PHOENIXINDEX';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint PK_DIM_DIAGNOSE was created');
+
+EXCEPTION
+    WHEN E_PRIMARY_KEY_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint PK_DIM_DIAGNOSE already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of PK_DIM_DIAGNOSE constraint:' || SQLERRM);
+END;
+/
+
+
+
+
+/**************************************************************************
+ DDL statements for FACT_HCFA table
+**************************************************************************/
+DECLARE
+    E_OBJECT_EXISTS       EXCEPTION;
+    PRAGMA EXCEPTION_INIT (E_OBJECT_EXISTS, -00955);
+BEGIN
+    EXECUTE IMMEDIATE '
+CREATE TABLE FACT_HCFA 
+(
+    FACT_ID	                NUMERIC(12) NOT NULL,
+    DATE_ID	                NUMERIC(12),
+    PATIENT_ID	            NUMERIC(12),
+    PROVIDER_ID	            NUMERIC(12),
+    CPT_ID	                NUMERIC(12),
+    MODIFIER_ID	            NUMERIC(12),
+    BILL_ID	                NUMERIC(12),
+    CHARGES	                NUMERIC(12,2),
+    DIAGNOSE_ID_1	        NUMERIC(12),
+    DIAGNOSE_ID_2	        NUMERIC(12),
+    DIAGNOSE_ID_3	        NUMERIC(12),
+    DIAGNOSE_ID_4	        NUMERIC(12)
+)
+   TABLESPACE PHOENIXDATA';
+
+    DBMS_OUTPUT.PUT_LINE(    '[INFO]: Table FACT_HCFA was created');
+EXCEPTION
+    WHEN E_OBJECT_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[INFO]: Table FACT_HCFA already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of FACT_HCFA table:' || SQLERRM);
+END;
+/
+
+-- Primary key
+DECLARE
+    E_OBJECT_EXISTS        EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_OBJECT_EXISTS, -00955);
+BEGIN
+    EXECUTE IMMEDIATE '
+        CREATE UNIQUE INDEX XPK_FACT_HCFA
+            ON FACT_HCFA (FACT_ID)
+                TABLESPACE PHOENIXINDEX';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XPK_FACT_HCFA was created');
+EXCEPTION
+    WHEN E_OBJECT_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XPK_FACT_HCFA already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of XPK_FACT_HCFA index:' || SQLERRM);
+        
+END;
+/
+
+DECLARE
+    E_PRIMARY_KEY_EXISTS   EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_PRIMARY_KEY_EXISTS, -02260);
+BEGIN
+    EXECUTE IMMEDIATE '
+        ALTER TABLE FACT_HCFA
+            ADD CONSTRAINT PK_FACT_HCFA
+                PRIMARY KEY (FACT_ID)
+                    USING INDEX
+                    TABLESPACE PHOENIXINDEX';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint PK_FACT_HCFA was created');
+
+EXCEPTION
+    WHEN E_PRIMARY_KEY_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint PK_FACT_HCFA already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of PK_FACT_HCFA constraint:' || SQLERRM);
+END;
+/
+
+-- Foreign key
+DECLARE
+    E_FOREIGN_KEY_EXISTS   EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_FOREIGN_KEY_EXISTS, -02275);
+BEGIN
+    EXECUTE IMMEDIATE '
+        ALTER TABLE FACT_HCFA
+            ADD CONSTRAINT FK_FACT_HCF_FK_DIMBIL_DIM_BILL FOREIGN KEY (BILL_ID)
+                REFERENCES DIM_BILL(BILL_ID)';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint FK_FACT_HCF_FK_DIMBIL_DIM_BILL was created');
+
+EXCEPTION
+    WHEN E_FOREIGN_KEY_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint FK_FACT_HCF_FK_DIMBIL_DIM_BILL already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of FK_FACT_HCF_FK_DIMBIL_DIM_BILL constraint:' || SQLERRM);
+END;
+/
+
+-- Index
+DECLARE
+    E_OBJECT_EXISTS        EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_OBJECT_EXISTS, -00955);
+BEGIN
+    EXECUTE IMMEDIATE '
+        CREATE INDEX XFK1_FACT_HCFA ON FACT_HCFA (
+            BILL_ID
+        )
+        TABLESPACE PHOENIXINDEX';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XFK1_FACT_HCFA was created');
+
+EXCEPTION
+    WHEN E_OBJECT_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XFK1_FACT_HCFA already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of XFK1_FACT_HCFA index:' || SQLERRM);
+END;
+/
+
+
+
+
+-- Foreign key
+DECLARE
+    E_FOREIGN_KEY_EXISTS   EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_FOREIGN_KEY_EXISTS, -02275);
+BEGIN
+    EXECUTE IMMEDIATE '
+        ALTER TABLE FACT_HCFA
+            ADD CONSTRAINT FK_FACT_HCF_FK_DIMCPT_DIM_CPT FOREIGN KEY (CPT_ID)
+                REFERENCES DIM_CPT(CPT_ID)';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint FK_FACT_HCF_FK_DIMCPT_DIM_CPT was created');
+
+EXCEPTION
+    WHEN E_FOREIGN_KEY_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint FK_FACT_HCF_FK_DIMCPT_DIM_CPT already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of FK_FACT_HCF_FK_DIMCPT_DIM_CPT constraint:' || SQLERRM);
+END;
+/
+
+-- Index
+DECLARE
+    E_OBJECT_EXISTS        EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_OBJECT_EXISTS, -00955);
+BEGIN
+    EXECUTE IMMEDIATE '
+        CREATE INDEX XFK2_FACT_HCFA ON FACT_HCFA (
+            CPT_ID
+        )
+        TABLESPACE PHOENIXINDEX';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XFK2_FACT_HCFA was created');
+
+EXCEPTION
+    WHEN E_OBJECT_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XFK2_FACT_HCFA already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of XFK2_FACT_HCFA index:' || SQLERRM);
+END;
+/
+
+
+
+
+
+-- Foreign key
+DECLARE
+    E_FOREIGN_KEY_EXISTS   EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_FOREIGN_KEY_EXISTS, -02275);
+BEGIN
+    EXECUTE IMMEDIATE '
+        ALTER TABLE FACT_HCFA
+            ADD CONSTRAINT FK_FACT_HCF_FK_DIMDAT_DIM_DATE FOREIGN KEY (DATE_ID)
+                REFERENCES DIM_DATE(DATE_ID)';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint FK_FACT_HCF_FK_DIMDAT_DIM_DATE was created');
+
+EXCEPTION
+    WHEN E_FOREIGN_KEY_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint FK_FACT_HCF_FK_DIMDAT_DIM_DATE already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of FK_FACT_HCF_FK_DIMDAT_DIM_DATE constraint:' || SQLERRM);
+END;
+/
+
+-- Index
+DECLARE
+    E_OBJECT_EXISTS        EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_OBJECT_EXISTS, -00955);
+BEGIN
+    EXECUTE IMMEDIATE '
+        CREATE INDEX XFK3_FACT_HCFA ON FACT_HCFA (
+            DATE_ID
+        )
+        TABLESPACE PHOENIXINDEX';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XFK3_FACT_HCFA was created');
+
+EXCEPTION
+    WHEN E_OBJECT_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XFK3_FACT_HCFA already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of XFK3_FACT_HCFA index:' || SQLERRM);
+END;
+/
+
+
+
+
+-- Foreign key
+DECLARE
+    E_FOREIGN_KEY_EXISTS   EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_FOREIGN_KEY_EXISTS, -02275);
+BEGIN
+    EXECUTE IMMEDIATE '
+        ALTER TABLE FACT_HCFA
+            ADD CONSTRAINT FK_FACT_HCF_FK_DIMDIA_DIMDIAG1 FOREIGN KEY (DIAGNOSE_ID_1)
+                REFERENCES DIM_DIAGNOSE(DIAGNOSE_ID)';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint FK_FACT_HCF_FK_DIMDIA_DIMDIAG1 was created');
+
+EXCEPTION
+    WHEN E_FOREIGN_KEY_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint FK_FACT_HCF_FK_DIMDIA_DIMDIAG1 already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of FK_FACT_HCF_FK_DIMDIA_DIMDIAG1 constraint:' || SQLERRM);
+END;
+/
+
+-- Index
+DECLARE
+    E_OBJECT_EXISTS        EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_OBJECT_EXISTS, -00955);
+BEGIN
+    EXECUTE IMMEDIATE '
+        CREATE INDEX XFK4_FACT_HCFA ON FACT_HCFA (
+            DIAGNOSE_ID_1
+        )
+        TABLESPACE PHOENIXINDEX';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XFK4_FACT_HCFA was created');
+
+EXCEPTION
+    WHEN E_OBJECT_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XFK4_FACT_HCFA already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of XFK4_FACT_HCFA index:' || SQLERRM);
+END;
+/
+
+
+
+
+-- Foreign key
+DECLARE
+    E_FOREIGN_KEY_EXISTS   EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_FOREIGN_KEY_EXISTS, -02275);
+BEGIN
+    EXECUTE IMMEDIATE '
+        ALTER TABLE FACT_HCFA
+            ADD CONSTRAINT FK_FACT_HCF_FK_DIMDIA_DIMDIAG2 FOREIGN KEY (DIAGNOSE_ID_2)
+                REFERENCES DIM_DIAGNOSE(DIAGNOSE_ID)';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint FK_FACT_HCF_FK_DIMDIA_DIMDIAG2 was created');
+
+EXCEPTION
+    WHEN E_FOREIGN_KEY_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint FK_FACT_HCF_FK_DIMDIA_DIMDIAG2 already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of FK_FACT_HCF_FK_DIMDIA_DIMDIAG2 constraint:' || SQLERRM);
+END;
+/
+
+-- Index
+DECLARE
+    E_OBJECT_EXISTS        EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_OBJECT_EXISTS, -00955);
+BEGIN
+    EXECUTE IMMEDIATE '
+        CREATE INDEX XFK5_FACT_HCFA ON FACT_HCFA (
+            DIAGNOSE_ID_2
+        )
+        TABLESPACE PHOENIXINDEX';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XFK5_FACT_HCFA was created');
+
+EXCEPTION
+    WHEN E_OBJECT_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XFK5_FACT_HCFA already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of XFK5_FACT_HCFA index:' || SQLERRM);
+END;
+/
+
+
+
+-- Foreign key
+DECLARE
+    E_FOREIGN_KEY_EXISTS   EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_FOREIGN_KEY_EXISTS, -02275);
+BEGIN
+    EXECUTE IMMEDIATE '
+        ALTER TABLE FACT_HCFA
+            ADD CONSTRAINT FK_FACT_HCF_FK_DIMDIA_DIMDIAG3 FOREIGN KEY (DIAGNOSE_ID_3)
+                REFERENCES DIM_DIAGNOSE(DIAGNOSE_ID)';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint FK_FACT_HCF_FK_DIMDIA_DIMDIAG3 was created');
+
+EXCEPTION
+    WHEN E_FOREIGN_KEY_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint FK_FACT_HCF_FK_DIMDIA_DIMDIAG3 already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of FK_FACT_HCF_FK_DIMDIA_DIMDIAG3 constraint:' || SQLERRM);
+END;
+/
+
+-- Index
+DECLARE
+    E_OBJECT_EXISTS        EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_OBJECT_EXISTS, -00955);
+BEGIN
+    EXECUTE IMMEDIATE '
+        CREATE INDEX XFK6_FACT_HCFA ON FACT_HCFA (
+            DIAGNOSE_ID_3
+        )
+        TABLESPACE PHOENIXINDEX';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XFK6_FACT_HCFA was created');
+
+EXCEPTION
+    WHEN E_OBJECT_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XFK6_FACT_HCFA already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of XFK6_FACT_HCFA index:' || SQLERRM);
+END;
+/
+
+
+-- Foreign key
+DECLARE
+    E_FOREIGN_KEY_EXISTS   EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_FOREIGN_KEY_EXISTS, -02275);
+BEGIN
+    EXECUTE IMMEDIATE '
+        ALTER TABLE FACT_HCFA
+            ADD CONSTRAINT FK_FACT_HCF_FK_DIMDIA_DIMDIAG4 FOREIGN KEY (DIAGNOSE_ID_4)
+                REFERENCES DIM_DIAGNOSE(DIAGNOSE_ID)';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint FK_FACT_HCF_FK_DIMDIA_DIMDIAG4 was created');
+
+EXCEPTION
+    WHEN E_FOREIGN_KEY_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint FK_FACT_HCF_FK_DIMDIA_DIMDIAG4 already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of FK_FACT_HCF_FK_DIMDIA_DIMDIAG4 constraint:' || SQLERRM);
+END;
+/
+
+-- Index
+DECLARE
+    E_OBJECT_EXISTS        EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_OBJECT_EXISTS, -00955);
+BEGIN
+    EXECUTE IMMEDIATE '
+        CREATE INDEX XFK7_FACT_HCFA ON FACT_HCFA (
+            DIAGNOSE_ID_4
+        )
+        TABLESPACE PHOENIXINDEX';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XFK7_FACT_HCFA was created');
+
+EXCEPTION
+    WHEN E_OBJECT_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XFK7_FACT_HCFA already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of XFK7_FACT_HCFA index:' || SQLERRM);
+END;
+/
+
+
+
+-- Foreign key
+DECLARE
+    E_FOREIGN_KEY_EXISTS   EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_FOREIGN_KEY_EXISTS, -02275);
+BEGIN
+    EXECUTE IMMEDIATE '
+        ALTER TABLE FACT_HCFA
+            ADD CONSTRAINT FK_FACT_HCF_FK_DIMMOD_DIM_MODI FOREIGN KEY (MODIFIER_ID)
+                REFERENCES DIM_MODIFIER(MODIFIER_ID)';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint FK_FACT_HCF_FK_DIMMOD_DIM_MODI was created');
+
+EXCEPTION
+    WHEN E_FOREIGN_KEY_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint FK_FACT_HCF_FK_DIMMOD_DIM_MODI already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of FK_FACT_HCF_FK_DIMMOD_DIM_MODI constraint:' || SQLERRM);
+END;
+/
+
+-- Index
+DECLARE
+    E_OBJECT_EXISTS        EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_OBJECT_EXISTS, -00955);
+BEGIN
+    EXECUTE IMMEDIATE '
+        CREATE INDEX XFK8_FACT_HCFA ON FACT_HCFA (
+            MODIFIER_ID
+        )
+        TABLESPACE PHOENIXINDEX';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XFK8_FACT_HCFA was created');
+
+EXCEPTION
+    WHEN E_OBJECT_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XFK8_FACT_HCFA already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of XFK8_FACT_HCFA index:' || SQLERRM);
+END;
+/
+
+
+
+
+-- Foreign key
+DECLARE
+    E_FOREIGN_KEY_EXISTS   EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_FOREIGN_KEY_EXISTS, -02275);
+BEGIN
+    EXECUTE IMMEDIATE '
+        ALTER TABLE FACT_HCFA
+            ADD CONSTRAINT FK_FACT_HCF_FK_DIMPAT_PK_DIM_P FOREIGN KEY (PATIENT_ID)
+                REFERENCES DIM_PATIENT(PATIENT_ID)';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint FK_FACT_HCF_FK_DIMPAT_PK_DIM_P was created');
+
+EXCEPTION
+    WHEN E_FOREIGN_KEY_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint FK_FACT_HCF_FK_DIMPAT_PK_DIM_P already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of FK_FACT_HCF_FK_DIMPAT_PK_DIM_P constraint:' || SQLERRM);
+END;
+/
+
+-- Index
+DECLARE
+    E_OBJECT_EXISTS        EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_OBJECT_EXISTS, -00955);
+BEGIN
+    EXECUTE IMMEDIATE '
+        CREATE INDEX XFK9_FACT_HCFA ON FACT_HCFA (
+            PATIENT_ID
+        )
+        TABLESPACE PHOENIXINDEX';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XFK9_FACT_HCFA was created');
+
+EXCEPTION
+    WHEN E_OBJECT_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XFK9_FACT_HCFA already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of XFK9_FACT_HCFA index:' || SQLERRM);
+END;
+/
+
+
+
+
+-- Foreign key
+DECLARE
+    E_FOREIGN_KEY_EXISTS   EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_FOREIGN_KEY_EXISTS, -02275);
+BEGIN
+    EXECUTE IMMEDIATE '
+        ALTER TABLE FACT_HCFA
+            ADD CONSTRAINT FK_FACT_HCF_FK_DIMPRO_DIM_PROV FOREIGN KEY (PROVIDER_ID)
+                REFERENCES DIM_PROVIDER(PROVIDER_ID)';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint FK_FACT_HCF_FK_DIMPRO_DIM_PROV was created');
+
+EXCEPTION
+    WHEN E_FOREIGN_KEY_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Constraint FK_FACT_HCF_FK_DIMPRO_DIM_PROV already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of FK_FACT_HCF_FK_DIMPRO_DIM_PROV constraint:' || SQLERRM);
+END;
+/
+
+-- Index
+DECLARE
+    E_OBJECT_EXISTS        EXCEPTION;
+    PRAGMA EXCEPTION_INIT  (E_OBJECT_EXISTS, -00955);
+BEGIN
+    EXECUTE IMMEDIATE '
+        CREATE INDEX XFK10_FACT_HCFA ON FACT_HCFA (
+            PROVIDER_ID
+        )
+        TABLESPACE PHOENIXINDEX';
+
+    DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XFK10_FACT_HCFA was created');
+
+EXCEPTION
+    WHEN E_OBJECT_EXISTS
+    THEN
+        DBMS_OUTPUT.PUT_LINE ('[INFO]: Index XFK10_FACT_HCFA already exists');
+    WHEN OTHERS
+    THEN
+        DBMS_OUTPUT.PUT_LINE('[ERROR]: Error during creation of XFK10_FACT_HCFA index:' || SQLERRM);
+END;
+/
